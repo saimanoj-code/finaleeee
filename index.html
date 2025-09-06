@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Educated Youth & Unemployment — Current Issue</title>
+  <meta name="description" content="An explainer page about why many educated youth struggle to find proper jobs and what can be done about it." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#60a5fa; --glass: rgba(255,255,255,0.04);
+      --radius:12px; --gap:18px; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; padding:28px; background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent 6%),
+      linear-gradient(180deg, #071022 0%, #07182a 100%);
+      color:#e6eef8; -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .container{max-width:1000px; margin:0 auto; display:grid; grid-template-columns: 1fr; gap:18px;}
+    header{display:flex; align-items:center; gap:14px}
+    .logo{
+      width:60px; height:60px; background:linear-gradient(135deg,var(--accent), #7c3aed);
+      border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:700;
+      color:#021028; font-size:24px; box-shadow: 0 6px 20px rgba(8,12,20,0.6);
+    }
+    h1{margin:0; font-size:20px}
+    p.lead{color:var(--muted); margin:4px 0 0; font-size:14px}
+
+    main{display:grid; grid-template-columns: 1fr; gap:16px;}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          border-radius:var(--radius); padding:18px; box-shadow: 0 6px 20px rgba(2,6,23,0.5);}
+    .grid-2{display:grid; grid-template-columns: 1fr; gap:12px}
+    @media(min-width:860px){ .grid-2{grid-template-columns: 2fr 1fr} }
+
+    .stats{display:flex; gap:10px; flex-wrap:wrap}
+    .stat{flex:1; min-width:160px; background:var(--glass); padding:12px; border-radius:10px}
+    .stat .num{font-size:20px; font-weight:700}
+    .stat .label{font-size:12px; color:var(--muted); margin-top:6px}
+
+    .progress{height:12px; background:rgba(255,255,255,0.04); border-radius:8px; overflow:hidden}
+    .progress > span{display:block; height:100%; background:linear-gradient(90deg,var(--accent), #7c3aed); width:0; transition:width 900ms ease-out}
+
+    /* Accordion */
+    .acc-item{border-radius:10px; overflow:hidden; margin-bottom:8px; border:1px solid rgba(255,255,255,0.03)}
+    .acc-title{display:flex; justify-content:space-between; align-items:center; padding:12px; cursor:pointer;}
+    .acc-title h3{margin:0; font-size:15px}
+    .acc-title small{color:var(--muted)}
+    .acc-body{padding:12px 12px 18px; border-top:1px solid rgba(255,255,255,0.02); display:none; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+
+    /* solutions list */
+    ul.solutions{padding-left:18px; margin:8px 0}
+    ul.solutions li{margin:8px 0}
+
+    footer{display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .cta{background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:10px}
+    .btn{display:inline-block; padding:10px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent), #7c3aed); color:#021028; font-weight:600; text-decoration:none}
+    form label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted)}
+    input[type="text"], input[type="email"], textarea{
+      width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04);
+      background:transparent; color:inherit; font-size:14px;
+    }
+    .small{font-size:13px; color:var(--muted)}
+    .tag{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.03); font-size:13px; color:var(--muted); margin-right:8px}
+
+    /* subtle focus */
+    a:focus, button:focus, input:focus, textarea:focus { outline:3px solid rgba(96,165,250,0.14); outline-offset:3px; }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-hidden="true">UY</div>
+      <div>
+        <h1>Many Educated Youth Are Not Finding Proper Jobs</h1>
+        <p class="lead">A concise explainer: causes, impacts, quick stats and practical solutions for students, institutions and policymakers.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="card grid-2" aria-labelledby="overview-heading">
+        <div>
+          <h2 id="overview-heading">Overview</h2>
+          <p>
+            Across many regions, a growing number of graduates and diploma-holders find it difficult to secure jobs that match their education, skills and career expectations.
+            This mismatch reduces earnings, increases underemployment, and creates frustration among youth and families.
+          </p>
+
+          <div style="margin-top:12px" class="stats" role="list">
+            <div class="stat" role="listitem" aria-label="Underemployment estimate">
+              <div class="num">35% <span class="small">approx.</span></div>
+              <div class="label">Underemployment / skill underuse</div>
+            </div>
+            <div class="stat" role="listitem" aria-label="Mismatch between skills and jobs">
+              <div class="num">40% <span class="small">approx.</span></div>
+              <div class="label">Skill-job mismatch</div>
+            </div>
+            <div class="stat" role="listitem" aria-label="Percentage who consider switching career">
+              <div class="num">28% <span class="small">approx.</span></div>
+              <div class="label">Consider changing field after graduation</div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:18px">Quick Causes</h3>
+          <ul class="solutions">
+            <li><strong>Curriculum gap</strong> — academic programs not aligned with industry needs (practical skills, tools).</li>
+            <li><strong>Lack of soft skills</strong> — communication, problem solving and teamwork often under-trained.</li>
+            <li><strong>Limited experience</strong> — internships or project work opportunities are scarce.</li>
+            <li><strong>Geography</strong> — good jobs clustered in cities while graduates remain in smaller towns.</li>
+            <li><strong>Economic cycles</strong> — hiring slowdowns and automation affect entry-level roles.</li>
+          </ul>
+
+          <h3 style="margin-top:10px">Immediate Effects</h3>
+          <ul class="solutions">
+            <li>Higher youth dissatisfaction and mental stress</li>
+            <li>Brain drain — migration to other cities/countries</li>
+            <li>Lower lifetime earnings and underutilized talent</li>
+          </ul>
+        </div>
+
+        <aside>
+          <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+            <div class="tag">Policy</div>
+            <div class="tag">Education</div>
+            <div class="tag">Jobs</div>
+          </div>
+
+          <div class="card" style="padding:12px; margin-bottom:12px">
+            <h3 style="margin-top:0">Solutions (who can act)</h3>
+            <div class="small" style="margin-bottom:8px">Students</div>
+            <ul class="solutions small">
+              <li>Focus on projects, internships and open-source contributions</li>
+              <li>Learn job-market tools (Git, cloud basics, data analysis)</li>
+              <li>Build a portfolio and practice interviews</li>
+            </ul>
+
+            <div class="small" style="margin-top:8px">Colleges & Trainers</div>
+            <ul class="solutions small">
+              <li>Embed practical labs, industry tie-ups and placement drives</li>
+              <li>Offer short-term skill certificates alongside degrees</li>
+            </ul>
+
+            <div class="small" style="margin-top:8px">Employers & Government</div>
+            <ul class="solutions small">
+              <li>Internship subsidies, apprenticeships and city-level skill hubs</li>
+              <li>Support MSMEs to hire and train entry-level candidates</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding:12px;">
+            <h3 style="margin-top:0">Progress indicators</h3>
+            <div class="small">Placement readiness</div>
+            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="48%"></span></div>
+
+            <div class="small">Industry exposure</div>
+            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="36%"></span></div>
+
+            <div class="small">Soft-skill training</div>
+            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="42%"></span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="card" aria-labelledby="deep-dive">
+        <h2 id="deep-dive">Deeper Look — Common Patterns</h2>
+
+        <div class="acc-item">
+          <div class="acc-title" tabindex="0">
+            <h3>1. Overemphasis on theoretical exams</h3>
+            <small>Click to expand</small>
+          </div>
+          <div class="acc-body">
+            <p>Many programs prioritize syllabus completion and written tests over hands-on projects. As a result, graduates may be strong in theory but unable to demonstrate applied skills during interviews.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <div class="acc-title" tabindex="0">
+            <h3>2. Limited career guidance & mentorship</h3>
+            <small>Click to expand</small>
+          </div>
+          <div class="acc-body">
+            <p>Students often lack structured mentoring: what roles exist in industry, how to prepare for them, and what a realistic transition path looks like.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <div class="acc-title" tabindex="0">
+            <h3>3. Hiring filters & unrealistic JD expectations</h3>
+            <small>Click to expand</small>
+          </div>
+          <div class="acc-body">
+            <p>Some job postings ask for years of experience or many niche skills even for entry-level roles — this shuts out otherwise capable fresh graduates.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="take-action">
+        <h2 id="take-action">Take Action — Practical Checklist</h2>
+        <ol class="solutions">
+          <li>Build 3+ small projects that solve real problems and show them on a portfolio site or GitHub.</li>
+          <li>Complete at least one 1–3 month internship or apprenticeship.</li>
+          <li>Practice mock interviews and behavioural questions with peers or mentors weekly.</li>
+          <li>Attend local meetups, hackathons and government skill programs to network.</li>
+          <li>Learn transferable tools: version control, spreadsheets, basic cloud or data skills depending on field.</li>
+        </ol>
+
+        <div style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <a class="btn" href="#contact">Share a story / volunteer</a>
+          <div class="small">Want this page as a PDF or a shareable flyer? Save or print from your browser.</div>
+        </div>
+      </section>
+
+      <section id="contact" class="card" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Share Feedback or A Story</h2>
+        <p class="small">If you're a student, teacher, or recruiter — share a short note. (This form won't send anywhere — it's a demo. Replace the JS endpoint to connect it.)</p>
+
+        <form onsubmit="event.preventDefault(); alert('Thanks! This is demo-only — integrate a backend to submit.');">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Priya" required>
+
+          <label for="email" style="margin-top:8px">Email (optional)</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com">
+
+          <label for="story" style="margin-top:8px">Your short story / suggestion</label>
+          <textarea id="story" name="story" rows="4" placeholder="Describe your experience or idea..." required></textarea>
+
+          <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+            <button class="btn" type="submit">Send (demo)</button>
+            <div class="small">This is a template — wire it to your backend to collect responses.</div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="small">Created: <strong id="date-created"></strong></div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <div class="cta">Use open internships • Build projects • Join local skill hubs</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // set date
+    document.getElementById('date-created').textContent = new Date().toLocaleDateString();
+
+    // Progress bars animate using data-width attribute
+    document.querySelectorAll('.progress > span').forEach(sp => {
+      const w = sp.getAttribute('data-width') || '40%';
+      // small delay for effect
+      setTimeout(()=> sp.style.width = w, 150);
+    });
+
+    // accordion behavior
+    document.querySelectorAll('.acc-item').forEach(item=>{
+      const title = item.querySelector('.acc-title');
+      const body = item.querySelector('.acc-body');
+      title.addEventListener('click', ()=> {
+        const open = body.style.display === 'block';
+        // close all
+        document.querySelectorAll('.acc-body').forEach(b=> b.style.display='none');
+        if(!open) body.style.display='block';
+      });
+      // keyboard accessible
+      title.addEventListener('keydown', (e)=> {
+        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); title.click(); }
+      });
+    });
+
+    // small enhancement: auto-focus first accordion on load
+    window.addEventListener('load', ()=> {
+      const first = document.querySelector('.acc-item .acc-title');
+      if(first) first.focus();
+    });
+  </script>
+</body>
+</html>
