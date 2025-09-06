@@ -1,282 +1,373 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Educated Youth & Unemployment — Current Issue</title>
-  <meta name="description" content="An explainer page about why many educated youth struggle to find proper jobs and what can be done about it." />
-  <style>
-    :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#60a5fa; --glass: rgba(255,255,255,0.04);
-      --radius:12px; --gap:18px; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; padding:28px; background:
-      radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent 6%),
-      linear-gradient(180deg, #071022 0%, #07182a 100%);
-      color:#e6eef8; -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-    }
-    .container{max-width:1000px; margin:0 auto; display:grid; grid-template-columns: 1fr; gap:18px;}
-    header{display:flex; align-items:center; gap:14px}
-    .logo{
-      width:60px; height:60px; background:linear-gradient(135deg,var(--accent), #7c3aed);
-      border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:700;
-      color:#021028; font-size:24px; box-shadow: 0 6px 20px rgba(8,12,20,0.6);
-    }
-    h1{margin:0; font-size:20px}
-    p.lead{color:var(--muted); margin:4px 0 0; font-size:14px}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lane Division Demo — Two-wheeler / Emergency / Four-wheeler</title>
+<style>
+  :root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#0b74de;
+    --danger:#ef4444;
+    --ok:#10b981;
+    --lane1:#fff9f1;
+    --lane2:#f1fcff;
+    --lane3:#f6fff5;
+    --shadow: 0 6px 18px rgba(17,24,39,0.06);
+    font-family: Inter, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  body{
+    margin:0;
+    background:linear-gradient(180deg,var(--bg),#eef4ff);
+    min-height:100vh;
+    color:#111827;
+    padding:20px;
+    box-sizing:border-box;
+  }
 
-    main{display:grid; grid-template-columns: 1fr; gap:16px;}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-          border-radius:var(--radius); padding:18px; box-shadow: 0 6px 20px rgba(2,6,23,0.5);}
-    .grid-2{display:grid; grid-template-columns: 1fr; gap:12px}
-    @media(min-width:860px){ .grid-2{grid-template-columns: 2fr 1fr} }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  header h1{font-size:1.15rem;margin:0;}
+  header p{margin:0;color:var(--muted);font-size:0.95rem;}
 
-    .stats{display:flex; gap:10px; flex-wrap:wrap}
-    .stat{flex:1; min-width:160px; background:var(--glass); padding:12px; border-radius:10px}
-    .stat .num{font-size:20px; font-weight:700}
-    .stat .label{font-size:12px; color:var(--muted); margin-top:6px}
+  .container{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:20px;
+    align-items:start;
+  }
 
-    .progress{height:12px; background:rgba(255,255,255,0.04); border-radius:8px; overflow:hidden}
-    .progress > span{display:block; height:100%; background:linear-gradient(90deg,var(--accent), #7c3aed); width:0; transition:width 900ms ease-out}
+  /* Palette */
+  .palette{
+    background:var(--card);
+    border-radius:12px;
+    padding:14px;
+    box-shadow:var(--shadow);
+  }
+  .palette h2{margin:0 0 10px 0;font-size:1rem}
+  .vehicles{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .vehicle{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:10px;
+    border-radius:8px;
+    cursor:grab;
+    user-select:none;
+    border:1px dashed rgba(15,23,42,0.06);
+    background:linear-gradient(180deg, #fff, #fbfdff);
+  }
+  .vehicle .icon{
+    width:42px;height:42px;border-radius:8px;
+    display:grid;place-items:center;font-weight:700;
+    font-size:1.1rem;
+  }
+  .vehicle.two .icon{background:linear-gradient(180deg,#fff7ed,#fff2e6);color:#b45309}
+  .vehicle.emg .icon{background:linear-gradient(180deg,#f0f9ff,#e6f7ff);color:#0369a1}
+  .vehicle.four .icon{background:linear-gradient(180deg,#f0fff4,#e6ffee);color:#065f46}
 
-    /* Accordion */
-    .acc-item{border-radius:10px; overflow:hidden; margin-bottom:8px; border:1px solid rgba(255,255,255,0.03)}
-    .acc-title{display:flex; justify-content:space-between; align-items:center; padding:12px; cursor:pointer;}
-    .acc-title h3{margin:0; font-size:15px}
-    .acc-title small{color:var(--muted)}
-    .acc-body{padding:12px 12px 18px; border-top:1px solid rgba(255,255,255,0.02); display:none; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+  .vehicle .meta{display:flex;flex-direction:column}
+  .vehicle .meta .t{font-weight:600}
+  .vehicle .meta .s{font-size:0.85rem;color:var(--muted)}
 
-    /* solutions list */
-    ul.solutions{padding-left:18px; margin:8px 0}
-    ul.solutions li{margin:8px 0}
+  /* Road area */
+  .road{
+    background:transparent;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .lane{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding:12px;
+    border-radius:10px;
+    min-height:110px;
+    border:1px solid rgba(2,6,23,0.06);
+    box-shadow:var(--shadow);
+  }
+  .lane-label{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;
+  }
+  .lane .dropzone{
+    border-radius:8px;
+    min-height:56px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    padding:8px;
+    flex-wrap:wrap;
+    outline:2px dashed transparent;
+  }
+  .lane1{background:var(--lane1)}
+  .lane2{background:var(--lane2)}
+  .lane3{background:var(--lane3)}
 
-    footer{display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted); font-size:13px}
-    .cta{background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:10px}
-    .btn{display:inline-block; padding:10px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent), #7c3aed); color:#021028; font-weight:600; text-decoration:none}
-    form label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted)}
-    input[type="text"], input[type="email"], textarea{
-      width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04);
-      background:transparent; color:inherit; font-size:14px;
-    }
-    .small{font-size:13px; color:var(--muted)}
-    .tag{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.03); font-size:13px; color:var(--muted); margin-right:8px}
+  .dropzone.dragover{outline-color:rgba(11,116,222,0.35);background:linear-gradient(90deg, rgba(11,116,222,0.03), transparent)}
 
-    /* subtle focus */
-    a:focus, button:focus, input:focus, textarea:focus { outline:3px solid rgba(96,165,250,0.14); outline-offset:3px; }
+  .dropped{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 8px;
+    border-radius:8px;
+    border:1px solid rgba(15,23,42,0.06);
+    background:white;
+    font-weight:600;
+    font-size:0.9rem;
+  }
 
-  </style>
+  footer{
+    margin-top:18px;color:var(--muted);
+    font-size:0.9rem;
+  }
+
+  /* message */
+  .msg{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:12px 14px;
+    border-radius:10px;
+    box-shadow:var(--shadow);
+    background:var(--card);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    min-width:240px;
+  }
+  .msg.ok{border-left:6px solid var(--ok)}
+  .msg.err{border-left:6px solid var(--danger)}
+
+  /* Responsive */
+  @media (max-width:920px){
+    .container{grid-template-columns:1fr; padding-bottom:40px}
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo" aria-hidden="true">UY</div>
-      <div>
-        <h1>Many Educated Youth Are Not Finding Proper Jobs</h1>
-        <p class="lead">A concise explainer: causes, impacts, quick stats and practical solutions for students, institutions and policymakers.</p>
+<header>
+  <div>
+    <h1>Lane Division — Demo (India rules style)</h1>
+    <p>Lane 1: Two-wheelers • Lane 2: Emergency vehicles • Lane 3: Four-wheelers</p>
+  </div>
+  <div style="text-align:right">
+    <small style="color:var(--muted)">Drag vehicles into lanes. Wrong placements are blocked.</small>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Left: Palette -->
+  <aside class="palette" aria-label="Vehicle palette">
+    <h2>Vehicle palette</h2>
+    <div class="vehicles" id="palette">
+      <div class="vehicle two" draggable="true" data-type="two" id="v-bike">
+        <div class="icon">🏍️</div>
+        <div class="meta"><div class="t">Two-wheeler</div><div class="s">Motorbike / Scooter</div></div>
       </div>
-    </header>
+      <div class="vehicle emg" draggable="true" data-type="emg" id="v-ambulance">
+        <div class="icon">🚑</div>
+        <div class="meta"><div class="t">Emergency</div><div class="s">Ambulance / Fire</div></div>
+      </div>
+      <div class="vehicle four" draggable="true" data-type="four" id="v-car">
+        <div class="icon">🚗</div>
+        <div class="meta"><div class="t">Four-wheeler</div><div class="s">Car / SUV</div></div>
+      </div>
+      <div style="margin-top:10px;color:var(--muted);font-size:0.9rem">
+        Tip: drag an icon and drop onto a lane below.
+      </div>
+    </div>
+  </aside>
 
-    <main>
-      <section class="card grid-2" aria-labelledby="overview-heading">
-        <div>
-          <h2 id="overview-heading">Overview</h2>
-          <p>
-            Across many regions, a growing number of graduates and diploma-holders find it difficult to secure jobs that match their education, skills and career expectations.
-            This mismatch reduces earnings, increases underemployment, and creates frustration among youth and families.
-          </p>
+  <!-- Right: Road and lanes -->
+  <main class="road" role="main">
+    <section class="lane lane1" aria-label="Lane 1 (Two-wheeler)">
+      <div class="lane-label">
+        <strong>Lane 1 — Two-wheelers</strong>
+        <small style="color:var(--muted)">Allowed: Two-wheeler</small>
+      </div>
+      <div class="dropzone" data-allowed='["two"]' id="lane-1"></div>
+    </section>
 
-          <div style="margin-top:12px" class="stats" role="list">
-            <div class="stat" role="listitem" aria-label="Underemployment estimate">
-              <div class="num">35% <span class="small">approx.</span></div>
-              <div class="label">Underemployment / skill underuse</div>
-            </div>
-            <div class="stat" role="listitem" aria-label="Mismatch between skills and jobs">
-              <div class="num">40% <span class="small">approx.</span></div>
-              <div class="label">Skill-job mismatch</div>
-            </div>
-            <div class="stat" role="listitem" aria-label="Percentage who consider switching career">
-              <div class="num">28% <span class="small">approx.</span></div>
-              <div class="label">Consider changing field after graduation</div>
-            </div>
-          </div>
+    <section class="lane lane2" aria-label="Lane 2 (Emergency)">
+      <div class="lane-label">
+        <strong>Lane 2 — Emergency Vehicles</strong>
+        <small style="color:var(--muted)">Allowed: Emergency vehicles only</small>
+      </div>
+      <div class="dropzone" data-allowed='["emg"]' id="lane-2"></div>
+    </section>
 
-          <h3 style="margin-top:18px">Quick Causes</h3>
-          <ul class="solutions">
-            <li><strong>Curriculum gap</strong> — academic programs not aligned with industry needs (practical skills, tools).</li>
-            <li><strong>Lack of soft skills</strong> — communication, problem solving and teamwork often under-trained.</li>
-            <li><strong>Limited experience</strong> — internships or project work opportunities are scarce.</li>
-            <li><strong>Geography</strong> — good jobs clustered in cities while graduates remain in smaller towns.</li>
-            <li><strong>Economic cycles</strong> — hiring slowdowns and automation affect entry-level roles.</li>
-          </ul>
-
-          <h3 style="margin-top:10px">Immediate Effects</h3>
-          <ul class="solutions">
-            <li>Higher youth dissatisfaction and mental stress</li>
-            <li>Brain drain — migration to other cities/countries</li>
-            <li>Lower lifetime earnings and underutilized talent</li>
-          </ul>
-        </div>
-
-        <aside>
-          <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
-            <div class="tag">Policy</div>
-            <div class="tag">Education</div>
-            <div class="tag">Jobs</div>
-          </div>
-
-          <div class="card" style="padding:12px; margin-bottom:12px">
-            <h3 style="margin-top:0">Solutions (who can act)</h3>
-            <div class="small" style="margin-bottom:8px">Students</div>
-            <ul class="solutions small">
-              <li>Focus on projects, internships and open-source contributions</li>
-              <li>Learn job-market tools (Git, cloud basics, data analysis)</li>
-              <li>Build a portfolio and practice interviews</li>
-            </ul>
-
-            <div class="small" style="margin-top:8px">Colleges & Trainers</div>
-            <ul class="solutions small">
-              <li>Embed practical labs, industry tie-ups and placement drives</li>
-              <li>Offer short-term skill certificates alongside degrees</li>
-            </ul>
-
-            <div class="small" style="margin-top:8px">Employers & Government</div>
-            <ul class="solutions small">
-              <li>Internship subsidies, apprenticeships and city-level skill hubs</li>
-              <li>Support MSMEs to hire and train entry-level candidates</li>
-            </ul>
-          </div>
-
-          <div class="card" style="padding:12px;">
-            <h3 style="margin-top:0">Progress indicators</h3>
-            <div class="small">Placement readiness</div>
-            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="48%"></span></div>
-
-            <div class="small">Industry exposure</div>
-            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="36%"></span></div>
-
-            <div class="small">Soft-skill training</div>
-            <div class="progress" aria-hidden="true" style="margin:8px 0"><span data-width="42%"></span></div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="card" aria-labelledby="deep-dive">
-        <h2 id="deep-dive">Deeper Look — Common Patterns</h2>
-
-        <div class="acc-item">
-          <div class="acc-title" tabindex="0">
-            <h3>1. Overemphasis on theoretical exams</h3>
-            <small>Click to expand</small>
-          </div>
-          <div class="acc-body">
-            <p>Many programs prioritize syllabus completion and written tests over hands-on projects. As a result, graduates may be strong in theory but unable to demonstrate applied skills during interviews.</p>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <div class="acc-title" tabindex="0">
-            <h3>2. Limited career guidance & mentorship</h3>
-            <small>Click to expand</small>
-          </div>
-          <div class="acc-body">
-            <p>Students often lack structured mentoring: what roles exist in industry, how to prepare for them, and what a realistic transition path looks like.</p>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <div class="acc-title" tabindex="0">
-            <h3>3. Hiring filters & unrealistic JD expectations</h3>
-            <small>Click to expand</small>
-          </div>
-          <div class="acc-body">
-            <p>Some job postings ask for years of experience or many niche skills even for entry-level roles — this shuts out otherwise capable fresh graduates.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="card" aria-labelledby="take-action">
-        <h2 id="take-action">Take Action — Practical Checklist</h2>
-        <ol class="solutions">
-          <li>Build 3+ small projects that solve real problems and show them on a portfolio site or GitHub.</li>
-          <li>Complete at least one 1–3 month internship or apprenticeship.</li>
-          <li>Practice mock interviews and behavioural questions with peers or mentors weekly.</li>
-          <li>Attend local meetups, hackathons and government skill programs to network.</li>
-          <li>Learn transferable tools: version control, spreadsheets, basic cloud or data skills depending on field.</li>
-        </ol>
-
-        <div style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-          <a class="btn" href="#contact">Share a story / volunteer</a>
-          <div class="small">Want this page as a PDF or a shareable flyer? Save or print from your browser.</div>
-        </div>
-      </section>
-
-      <section id="contact" class="card" aria-labelledby="contact-heading">
-        <h2 id="contact-heading">Share Feedback or A Story</h2>
-        <p class="small">If you're a student, teacher, or recruiter — share a short note. (This form won't send anywhere — it's a demo. Replace the JS endpoint to connect it.)</p>
-
-        <form onsubmit="event.preventDefault(); alert('Thanks! This is demo-only — integrate a backend to submit.');">
-          <label for="name">Your name</label>
-          <input id="name" name="name" type="text" placeholder="e.g. Priya" required>
-
-          <label for="email" style="margin-top:8px">Email (optional)</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com">
-
-          <label for="story" style="margin-top:8px">Your short story / suggestion</label>
-          <textarea id="story" name="story" rows="4" placeholder="Describe your experience or idea..." required></textarea>
-
-          <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
-            <button class="btn" type="submit">Send (demo)</button>
-            <div class="small">This is a template — wire it to your backend to collect responses.</div>
-          </div>
-        </form>
-      </section>
-    </main>
+    <section class="lane lane3" aria-label="Lane 3 (Four-wheeler)">
+      <div class="lane-label">
+        <strong>Lane 3 — Four-wheelers</strong>
+        <small style="color:var(--muted)">Allowed: Cars / Four-wheelers</small>
+      </div>
+      <div class="dropzone" data-allowed='["four"]' id="lane-3"></div>
+    </section>
 
     <footer>
-      <div class="small">Created: <strong id="date-created"></strong></div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <div class="cta">Use open internships • Build projects • Join local skill hubs</div>
-      </div>
+      This demo enforces the lane rules you provided. It is a UI simulation only and not an official legal source.
     </footer>
-  </div>
+  </main>
+</div>
 
-  <script>
-    // set date
-    document.getElementById('date-created').textContent = new Date().toLocaleDateString();
+<!-- Message container -->
+<div id="message-area" aria-live="polite" style="display:none"></div>
 
-    // Progress bars animate using data-width attribute
-    document.querySelectorAll('.progress > span').forEach(sp => {
-      const w = sp.getAttribute('data-width') || '40%';
-      // small delay for effect
-      setTimeout(()=> sp.style.width = w, 150);
+<script>
+  // Allowed mapping described in the UI; we use data attributes on each dropzone.
+  // Drag & drop handling
+  const vehicles = document.querySelectorAll('.vehicle[draggable="true"]');
+  vehicles.forEach(v => {
+    v.addEventListener('dragstart', ev => {
+      ev.dataTransfer.setData('text/plain', v.id); // transfer id
+      // small visual hint
+      v.style.opacity = '0.6';
     });
+    v.addEventListener('dragend', ev => { v.style.opacity = ''; });
+  });
 
-    // accordion behavior
-    document.querySelectorAll('.acc-item').forEach(item=>{
-      const title = item.querySelector('.acc-title');
-      const body = item.querySelector('.acc-body');
-      title.addEventListener('click', ()=> {
-        const open = body.style.display === 'block';
-        // close all
-        document.querySelectorAll('.acc-body').forEach(b=> b.style.display='none');
-        if(!open) body.style.display='block';
-      });
-      // keyboard accessible
-      title.addEventListener('keydown', (e)=> {
-        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); title.click(); }
-      });
+  const dropzones = document.querySelectorAll('.dropzone');
+  dropzones.forEach(dz => {
+    dz.addEventListener('dragover', ev => {
+      ev.preventDefault();
+      dz.classList.add('dragover');
     });
+    dz.addEventListener('dragleave', ev => {
+      dz.classList.remove('dragover');
+    });
+    dz.addEventListener('drop', ev => {
+      ev.preventDefault();
+      dz.classList.remove('dragover');
+      const vid = ev.dataTransfer.getData('text/plain');
+      const vehicle = document.getElementById(vid);
+      if(!vehicle){
+        showMessage('Unknown vehicle.', 'err');
+        return;
+      }
+      const vtype = vehicle.dataset.type; // 'two', 'emg', 'four'
+      const allowed = JSON.parse(dz.dataset.allowed || "[]");
+      // Rule check: allow only if vtype in allowed
+      if(allowed.includes(vtype)){
+        // Create a small copy inside lane (so original palette remains)
+        const entry = document.createElement('div');
+        entry.className = 'dropped';
+        entry.setAttribute('data-type', vtype);
+        entry.tabIndex = 0;
+        entry.innerText = (vtype === 'two' ? '🏍️ Two-wheeler' : vtype === 'emg' ? '🚑 Emergency' : '🚗 Four-wheeler');
+        // add a remove button for convenience
+        const rem = document.createElement('button');
+        rem.style.marginLeft = '8px';
+        rem.style.border = 'none';
+        rem.style.background = 'transparent';
+        rem.style.cursor = 'pointer';
+        rem.title = 'Remove';
+        rem.innerText = '✖';
+        rem.addEventListener('click', () => entry.remove());
+        entry.appendChild(rem);
+        dz.appendChild(entry);
+        showMessage('Placed correctly ✅', 'ok');
+      } else {
+        // rejection behavior
+        showMessage('Violation — vehicle not allowed in this lane!', 'err');
+        // optionally flash the lane
+        dz.animate([
+          { boxShadow: '0 0 0 0 rgba(239,68,68,0.0)' },
+          { boxShadow: '0 0 0 10px rgba(239,68,68,0.12)' },
+          { boxShadow: '0 0 0 0 rgba(239,68,68,0.0)' }
+        ], { duration: 700 });
+      }
+    });
+  });
 
-    // small enhancement: auto-focus first accordion on load
-    window.addEventListener('load', ()=> {
-      const first = document.querySelector('.acc-item .acc-title');
-      if(first) first.focus();
+  // Simple message toast
+  let toastTimeout = null;
+  function showMessage(text, kind){
+    // remove existing
+    const existing = document.getElementById('demo-toast');
+    if(existing) existing.remove();
+
+    const el = document.createElement('div');
+    el.id = 'demo-toast';
+    el.className = 'msg ' + (kind === 'ok' ? 'ok' : 'err');
+    el.innerHTML = `<div style="font-weight:700">${kind === 'ok' ? 'Success' : 'Alert'}</div>
+                    <div style="flex:1;color:var(--muted);font-size:0.95rem">${text}</div>`;
+    document.body.appendChild(el);
+    // auto remove after 3s
+    if(toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => { el.remove(); }, 3000);
+  }
+
+  // Accessibility: allow keyboard "drop" simulation (select palette then lane)
+  // Basic approach: select one vehicle (click) then press "Enter" on lane dropzone to place
+  let selectedVehicleId = null;
+  document.querySelectorAll('.vehicle').forEach(v=>{
+    v.addEventListener('click', ()=> {
+      document.querySelectorAll('.vehicle').forEach(x=> x.style.boxShadow='');
+      v.style.boxShadow = '0 0 0 3px rgba(11,116,222,0.08)';
+      selectedVehicleId = v.id;
     });
-  </script>
+    v.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        v.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropzone').forEach(dz=>{
+    dz.tabIndex = 0;
+    dz.addEventListener('keydown', (e)=>{
+      if((e.key === 'Enter' || e.key === ' ') && selectedVehicleId){
+        // simulate drop
+        const vehicle = document.getElementById(selectedVehicleId);
+        const vtype = vehicle.dataset.type;
+        const allowed = JSON.parse(dz.dataset.allowed || "[]");
+        if(allowed.includes(vtype)){
+          const entry = document.createElement('div');
+          entry.className = 'dropped';
+          entry.setAttribute('data-type', vtype);
+          entry.innerText = (vtype === 'two' ? '🏍️ Two-wheeler' : vtype === 'emg' ? '🚑 Emergency' : '🚗 Four-wheeler');
+          const rem = document.createElement('button');
+          rem.style.marginLeft = '8px'; rem.style.border='none'; rem.style.background='transparent'; rem.style.cursor='pointer'; rem.title='Remove'; rem.innerText='✖';
+          rem.addEventListener('click', ()=>entry.remove());
+          entry.appendChild(rem);
+          dz.appendChild(entry);
+          showMessage('Placed correctly ✅', 'ok');
+        } else {
+          showMessage('Violation — vehicle not allowed in this lane!', 'err');
+          dz.animate([
+            { transform: 'translateX(0)' },
+            { transform: 'translateX(-6px)' },
+            { transform: 'translateX(6px)' },
+            { transform: 'translateX(0)' }
+          ], { duration: 400 });
+        }
+      }
+    });
+  });
+
+  // Optional: prefill lanes with a few items to show example usage
+  (function addExamples(){
+    const l1 = document.getElementById('lane-1');
+    const l3 = document.getElementById('lane-3');
+    const b1 = document.createElement('div'); b1.className='dropped'; b1.innerText='🏍️ Two-wheeler'; l1.appendChild(b1);
+    const c1 = document.createElement('div'); c1.className='dropped'; c1.innerText='🚗 Four-wheeler'; l3.appendChild(c1);
+  })();
+
+</script>
 </body>
 </html>
